@@ -10,6 +10,12 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      DB_USERNAME: root
+      DB_PASSWORD: root
+      DB_HOST: localhost # default host value for the database
+      DB_DATABASE: django
+      DB_PORT: 3306
     strategy:
       max-parallel: 4
       matrix:
@@ -26,5 +32,11 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
     - name: Run Tests
+      env:
+            DB_USERNAME: ${{ env.DB_USERNAME }}
+            DB_PASSWORD: ${{ env.DB_PASSWORD }}
+            DB_HOST: ${{ env.DB_HOST }}
+            DB_DATABASE: ${{ env.DB_DATABASE }}
+            DB_PORT: ${{ env.DB_PORT }}
       run: |
         python manage.py test
