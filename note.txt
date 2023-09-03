@@ -1,1 +1,2 @@
 seeder json must saved with utf-8 encoding
+use model manager when want scope feature like in Laravel -> https://docs.djangoproject.com/en/4.2/topics/db/managers/

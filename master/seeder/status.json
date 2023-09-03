@@ -1,0 +1,30 @@
+[
+    {
+        "model": "master.status",
+        "pk": 1,
+        "fields": {
+            "status_int": 1,
+            "status_name": "active",
+            "module_name": "user.customer"
+        }
+    },
+    {
+        "model": "master.status",
+        "pk": 2,
+        "fields": {
+            "status_int": 0,
+            "status_name": "inactive",
+            "module_name": "user.customer"
+        }
+    },
+    {
+        "model": "master.status",
+        "pk": 3,
+        "fields": {
+            "status_int": 2,
+            "status_name": "confirm email",
+            "module_name": "user.customer"
+        }
+    }
+
+]

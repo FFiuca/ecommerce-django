@@ -37,7 +37,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 APPEND_SLASH = True # use to append slash at end of url with '/' and only wirk with get request, django strict for url and must match on registered routing
-
+# AUTH_USER_MODEL = 'your_app.CustomUser' # when you want to make custom user model and make it as default auth model
 # Application definition
 
 INSTALLED_APPS = [
@@ -64,6 +64,7 @@ INSTALLED_APPS = [
     "rest_framework_simplejwt",
     'rest_framework_simplejwt.token_blacklist',
     "django_seed",
+    "safedelete",
 ]
 
 MIDDLEWARE = [
