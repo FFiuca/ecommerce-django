@@ -1,0 +1,1 @@
+seeder json must saved with utf-8 encoding

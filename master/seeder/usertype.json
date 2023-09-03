@@ -1,0 +1,23 @@
+[
+    {
+        "model": "master.usertype",
+        "pk": 1,
+        "fields": {
+            "user_type": "User"
+        }
+    },
+    {
+        "model": "master.usertype",
+        "pk": 2,
+        "fields": {
+            "user_type": "Owner and User"
+        }
+    },
+    {
+        "model": "master.usertype",
+        "pk": 3,
+        "fields": {
+            "user_type": "AdminSys"
+        }
+    }
+]
