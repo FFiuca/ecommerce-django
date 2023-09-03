@@ -28,11 +28,12 @@ class CustomerFactory(factory.Factory):
     usertype = UserType.objects.get(pk=1)
     user = factory.SubFactory(UserFactory)
 
-def runCustomerFactory():
-    for x in range(10):
-        a = CustomerFactory()
-        a.user.save()
-        a.save()
+class BootFactory:
+    def runCustomerFactory(self):
+        for x in range(10):
+            a = CustomerFactory()
+            a.user.save()
+            a.save()
 
 
 
