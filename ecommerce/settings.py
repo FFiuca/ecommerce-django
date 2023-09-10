@@ -98,6 +98,10 @@ TEMPLATES = [
     },
 ]
 
+FIXTURE_DIRS = [
+    BASE_DIR / "master" / "seeder"
+]
+
 REST_FRAMEWORK  = {
     'DEFAULT_AUTHENTICATION_CLASSES' : [
         'rest_framework_simplejwt.authentication.JWTAuthentication',

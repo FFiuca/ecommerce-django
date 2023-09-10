@@ -5,7 +5,9 @@
         "fields": {
             "status_int": 1,
             "status_name": "active",
-            "module_name": "user.customer"
+            "module_name": "user.customer",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
         }
     },
     {
@@ -14,7 +16,9 @@
         "fields": {
             "status_int": 0,
             "status_name": "inactive",
-            "module_name": "user.customer"
+            "module_name": "user.customer",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
         }
     },
     {
@@ -23,7 +27,9 @@
         "fields": {
             "status_int": 2,
             "status_name": "confirm email",
-            "module_name": "user.customer"
+            "module_name": "user.customer",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
         }
     }
 

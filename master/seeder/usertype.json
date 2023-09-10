@@ -3,21 +3,27 @@
         "model": "master.usertype",
         "pk": 1,
         "fields": {
-            "user_type": "User"
+            "user_type": "User",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
         }
     },
     {
         "model": "master.usertype",
         "pk": 2,
         "fields": {
-            "user_type": "Owner and User"
+            "user_type": "Owner and User",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
         }
     },
     {
         "model": "master.usertype",
         "pk": 3,
         "fields": {
-            "user_type": "AdminSys"
+            "user_type": "AdminSys",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
         }
     }
 ]
