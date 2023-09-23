@@ -34,3 +34,8 @@ class RegisterOwnerForm(forms.Form):
             raise forms.ValidationError('Password not match', code='Invalid')
 
         return password2
+
+class LoginForm(forms.Form):
+    email = forms.EmailField(required=True)
+    password = forms.CharField(required=True)
+

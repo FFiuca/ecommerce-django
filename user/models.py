@@ -18,8 +18,11 @@ class Customer(SafeDeleteModel, models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
 
-class OwnerAndUser(SafeDeleteModel, models.Model):
-    _safedelete_policy = SOFT_DELETE
+class OwnerAndUser(
+    SafeDeleteModel,
+    models.Model
+    ):
+    # _safedelete_policy = SOFT_DELETE
 
     mobile_phone = models.CharField(max_length=25, blank=True)
     owner_name = models.CharField(max_length=150, blank=False)
@@ -30,4 +33,4 @@ class OwnerAndUser(SafeDeleteModel, models.Model):
                                   )
     status = models.ForeignKey(modelsMaster.Status, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(auto_now=True)
+    updated_at = models.DateTimeField(auto_now=True, blank=True)

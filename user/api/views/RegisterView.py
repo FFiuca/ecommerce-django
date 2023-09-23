@@ -119,7 +119,7 @@ class RegisterOwnerView(mixins.CreateModelMixin, viewsets.ViewSet):
             return Response(data={
                 'status': 400,
                 'data': {
-                    'error' : ''
+                    'error' : form.errors
                 }
             }, status=400)
         except Exception as e:

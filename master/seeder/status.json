@@ -64,5 +64,28 @@
             "created_at": "2023-09-03 15:24:25.786408",
             "updated_at" : "2023-09-03 15:24:25.786408"
         }
+    },
+    {
+        "model": "master.status",
+        "pk": 6,
+        "fields": {
+            "status_int": 1,
+            "status_name": "active",
+            "module_name": "store.user_store",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
+        }
+    },
+    {
+        "model": "master.status",
+        "pk": 6,
+        "fields": {
+            "status_int": 0,
+            "status_name": "inactive",
+            "module_name": "store.user_store",
+            "created_at": "2023-09-03 15:24:25.786408",
+            "updated_at" : "2023-09-03 15:24:25.786408"
+        }
     }
+
 ]
