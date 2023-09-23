@@ -4,7 +4,7 @@ from rest_framework.serializers import ValidationError
 from django.contrib.auth.models import User
 from user.api.serializers import UserSerializer, CustomerSerializer
 from master.models import UserType, Status
-from user.api.functions.RegisterFunc import RegisterCustomer
+from user.api.functions.RegisterFunc import RegisterCustomer, RegisterOwner
 from main.helpers import messageError
 from user.api import forms as formsUser
 from django import forms
@@ -27,8 +27,8 @@ class RegisterView(mixins.CreateModelMixin, viewsets.ViewSet):
                 'password2': data['password2'],
                 'email': data['email'],
                 'is_active': 1,
-                # 'is_staff': 0,
-                # 'is_superuser': 0,
+                'is_staff': 0,
+                'is_superuser': 0,
             }
 
             customer = {
@@ -79,6 +79,63 @@ class RegisterView(mixins.CreateModelMixin, viewsets.ViewSet):
             'status': 200,
             'data': add
         }, status=200)
+
+
+class RegisterOwnerView(mixins.CreateModelMixin, viewsets.ViewSet):
+
+    def create(self, request, *args, **kwargs):
+        userS = None
+        customerS = None
+        add = None
+        form = None
+
+        data = request.data
+        # print('hh', data)
+        try:
+            form = formsUser.RegisterOwnerForm(data=data)
+            if form.is_valid()==False:
+                raise forms.ValidationError('validation error')
+
+
+            user = {
+                'username': data['username'],
+                'password': data['password'],
+                'password2': data['password2'],
+                'email': data['email'],
+                'is_active': 1,
+                'is_staff': 0,
+                'is_superuser': 0
+            }
+
+            owner = {
+                'email': data['email'],
+                'owner_name': data['owner_name'],
+                'mobile_phone': data['mobile_phone'],
+            }
+
+            add = RegisterOwner.create(self, data_user=user, data_owner=owner)
+
+        except forms.ValidationError as e:
+            return Response(data={
+                'status': 400,
+                'data': {
+                    'error' : ''
+                }
+            }, status=400)
+        except Exception as e:
+            return Response(data={
+                'status': 500,
+                'data': {
+                    'error': messageError(e)
+                }
+            }, status=500)
+
+
+        return Response(data={
+            'status': 200,
+            'data': add
+        }, status=200)
+
 
 
 
