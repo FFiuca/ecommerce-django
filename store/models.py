@@ -53,6 +53,8 @@ class UserTag(SafeDeleteModel):
         indexes = [
             models.Index(fields=['tag_name'])
         ]
+
+
 # custom pivot table
 class ItemCategory(models.Model):
     category = models.ForeignKey(masterModel.Category, on_delete=models.CASCADE, related_name='pivot_item_category')

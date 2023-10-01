@@ -55,26 +55,27 @@ class TagFactory(django.DjangoModelFactory):
 
 class BootFactory:
     @classmethod
-    def runStoreFactory(self):
+    def runStoreFactory(self, size=1):
         # a = StoreFactory(owner=mUser.OwnerAndUser.objects.first())
-        a = StoreFactory.create_batch(3, owner=mUser.OwnerAndUser.objects.first())
+        # a = StoreFactory.create_batch(size or 1, owner=mUser.OwnerAndUser.objects.first())
+        a = StoreFactory.create_batch(size or 1)
 
         print(a)
 
     @classmethod
-    def runItemFactory(self):
-        c = fMaster.CategoryFactory.create_batch(1)
+    def runItemFactory(self, size_category: None|int =None, size_item: None|int =None):
+        c = fMaster.CategoryFactory.create_batch(size_category or 1)
         # a = ItemFactory(category=[c])
-        a = ItemFactory.create_batch(1, category=c)
+        a = ItemFactory.create_batch(size_item or 1, category=c)
 
         print(a)
         return a
 
     @classmethod
     def runTagFactory(self):
-        item = self.runItemFactory()
+        item = self.runItemFactory(size_category=2, size_item=3)
 
-        tag = TagFactory.create_batch(1, item=item)
+        tag = TagFactory.create_batch(10, item=item)
 
         print(tag)
 

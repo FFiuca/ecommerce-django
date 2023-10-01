@@ -9,6 +9,6 @@ fake.add_provider(faker_commerce.Provider)
 class CategoryFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.Category
-        django_get_or_create = ['category_name']
+        django_get_or_create = ('category_name',)
 
     category_name = factory.Sequence(lambda el: fake.ecommerce_category())

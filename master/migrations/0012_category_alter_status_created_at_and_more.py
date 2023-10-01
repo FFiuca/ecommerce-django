@@ -32,8 +32,8 @@ class Migration(migrations.Migration):
             name='created_at',
             field=models.DateTimeField(default=datetime.datetime(2023, 9, 28, 10, 31, 35, 318527, tzinfo=datetime.timezone.utc)),
         ),
-        migrations.AddIndex(
-            model_name='category',
-            index=models.Index(fields=['category_name'], name='category_name'),
-        ),
+        # migrations.AddIndex(
+        #     model_name='category',
+        #     index=models.Index(fields=['category_name'], name='category_name'),
+        # ),
     ]
