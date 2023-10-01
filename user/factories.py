@@ -17,6 +17,16 @@ class UserFactory(factory.Factory):
     is_superuser = factory.LazyFunction(lambda: faker.random_element(elements=(1,0,)))
     is_staff = factory.LazyFunction(lambda: faker.random_element(elements=(1,0,)))
 
+class UserFactory2(factory.django.DjangoModelFactory):
+    class Meta:
+        model = User
+
+    username = factory.Faker('user_name')
+    password = factory.LazyFunction(lambda username=username: make_password('1234'))
+    email = factory.Faker('email')
+    is_superuser = factory.LazyFunction(lambda: faker.random_element(elements=(1,0,)))
+    is_staff = factory.LazyFunction(lambda: faker.random_element(elements=(1,0,)))
+
 class CustomerFactory(factory.Factory):
     class Meta:
         model = models.Customer
@@ -27,6 +37,17 @@ class CustomerFactory(factory.Factory):
     status = Status.objects.filter(module_name='user.customer', status_int=1).order_by('?').first() # to get randomly
     usertype = UserType.objects.get(pk=1)
     user = factory.SubFactory(UserFactory)
+
+class OwnerAndUserFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = models.OwnerAndUser
+
+    mobile_phone = factory.Faker('phone_number')
+    owner_name = factory.Faker('name')
+    email = factory.Faker('email')
+    status = Status.objects.filter(module_name='user.owner', status_int=1).first()
+    usertype = UserType.objects.get(pk=2)
+    user = factory.SubFactory(UserFactory2)
 
 class BootFactory:
     def runCustomerFactory(self):

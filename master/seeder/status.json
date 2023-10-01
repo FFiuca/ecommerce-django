@@ -67,7 +67,7 @@
     },
     {
         "model": "master.status",
-        "pk": 6,
+        "pk": 7,
         "fields": {
             "status_int": 1,
             "status_name": "active",
@@ -78,7 +78,7 @@
     },
     {
         "model": "master.status",
-        "pk": 6,
+        "pk": 8,
         "fields": {
             "status_int": 0,
             "status_name": "inactive",
