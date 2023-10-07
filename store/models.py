@@ -1,6 +1,7 @@
 from django.db import models
 from user import models as userModel
 from master import models as masterModel
+from order import models as oModel
 from django.utils.timezone import now
 from safedelete.models import SafeDeleteModel, HARD_DELETE_NOCASCADE, SOFT_DELETE
 
@@ -32,6 +33,7 @@ class UserItem(SafeDeleteModel, models.Model):
     # c2.useritem_set.filter(item_name__contains='item 1').get()
     # i.category.filter(category_name='cat 2').all()
     category = models.ManyToManyField(masterModel.Category,through='ItemCategory', through_fields=['item', 'category']) # https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ManyToManyField.through_fields
+    customer_cart = models.ManyToManyField(userModel.Customer, through='order.Cart', through_fields=['item', 'customer'])
 
     class Meta:
         db_tablespace = 'user_item_test_space'

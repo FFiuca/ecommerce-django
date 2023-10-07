@@ -4,6 +4,7 @@ from safedelete.models import SafeDeleteModel
 from safedelete.models import HARD_DELETE_NOCASCADE, SOFT_DELETE
 
 from master import models as modelsMaster
+# from store import models as sModel
 
 class Customer(SafeDeleteModel, models.Model):
     _safedelete_policy = SOFT_DELETE
@@ -16,6 +17,9 @@ class Customer(SafeDeleteModel, models.Model):
     status = models.ForeignKey(modelsMaster.Status, on_delete=models.CASCADE, related_name='status')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    # using string models class to prevent circular import
+    item_cart = models.ManyToManyField('store.UserItem', through='order.Cart', through_fields=['customer', 'item'])
 
 
 class OwnerAndUser(
