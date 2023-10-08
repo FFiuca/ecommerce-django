@@ -50,6 +50,8 @@ class OwnerAndUserFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory2)
 
 class BootFactory:
+
+    @classmethod
     def runCustomerFactory(self):
         for x in range(10):
             a = CustomerFactory()

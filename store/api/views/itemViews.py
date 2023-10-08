@@ -25,7 +25,7 @@ class ItemView(viewsets.ModelViewSet):
             cond = cond & Q(user_tag_item__id=req['tag_id'])
 
         query = self.get_queryset().prefetch_related('category', 'user_tag_item').filter(cond) # need optimazation for user_tag_item due not use where in clause when get data
-        print('cokkkk')
+
         data = self.get_serializer(query, many=True).data
         data = {
             'status': 200,

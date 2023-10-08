@@ -115,6 +115,7 @@ REST_FRAMEWORK  = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         # 'rest_framework.permissions.IsAuthenticated', # any route who access must login
+        'rest_framework.permissions.AllowAny',
     ],
     # https://www.django-rest-framework.org/api-guide/throttling/
     'DEFAULT_THROTTLE_CLASSES': [

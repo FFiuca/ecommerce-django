@@ -11,4 +11,5 @@ urlpatterns = [
     # app
     path('user', include('user.urls')),
     path('store', include('store.urls')),
+    path('order', include('order.urls')),
 ]
