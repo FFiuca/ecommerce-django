@@ -7,7 +7,10 @@ urlpatterns = [
     path('/cart', include([
         path('/list', cart_view.CartView.as_view({
             'post': 'list'
-        }), name='cart-list')
+        }), name='cart-list'),
+        path('/add', cart_view.CartView.as_view({
+            'post': 'add'
+        }), name='cart-add')
     ]))
 ]
 

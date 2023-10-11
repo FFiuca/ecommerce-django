@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.contrib.auth.models import User
 from rest_framework.authtoken.models import Token
 from user.models import Customer
+from store import models as sModel
 from user.factories import BootFactory as BootFactoryUser
 
 class CartTest(APITestCase):
@@ -18,14 +19,31 @@ class CartTest(APITestCase):
         print('ckck')
         self.user = Customer.objects.first().user
 
+        self.client = APIClient()
+        self.client.login(username=self.user.username, password='1234')
+
     def test_cart_list(self):
-        client = APIClient()
-        client.login(username=self.user.username, password='1234')
         print(self.user)
-        req = client.post(reverse('order:cart-list'), data={
+        req = self.client.post(reverse('order:cart-list'), data={
             'item': 1
         })
         req = req.json()
 
         self.assertEqual(req['status'], 200)
+
+    def test_add_to_cart(self):
+        item = sModel.UserItem.objects.first()
+
+        data = {
+            'data' : {
+                'item': item.pk,
+                'qty': 1,
+            }
+        }
+
+        req = self.client.post(reverse('order:cart-add'), data=data, format='json')
+        req = req.json()
+        print(req)
+        self.assertEqual(req['status'], 200)
+
 
