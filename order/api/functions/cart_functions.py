@@ -4,6 +4,8 @@ from django.db import models
 from main import helpers
 from store import models as mStrore
 from order import models as mOrder
+from user import models as mUser
+from master import models as mMaster
 from django.db.models import Q
 
 class CartFunctions():
@@ -40,9 +42,12 @@ class CartFunctions():
             item = mStrore.UserItem.objects.filter(id=data['item']).first()
             customer = self.request.user.customer
             qty = data['qty']
+            status = mMaster.Status.objects.get(pk=9)
 
-            cart = mOrder.Cart.objects.get_or_create(customer=customer, item=item)
-            print(cart)
+            print(item, customer, mUser.Customer.objects.get(pk=customer.pk))
+
+            cart, created = mOrder.Cart.objects.filter(customer=customer.pk, item=item.pk, status__in=(9,10,)).get_or_create(customer=customer, item=item, status=status)
+            print(cart, created)
             if cart.status_id==0:
                 cart.status_id = 1
                 cart.qty = 0
