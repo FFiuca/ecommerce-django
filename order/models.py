@@ -32,6 +32,7 @@ class Checkout(SafeDeleteModel):
     customer = models.ForeignKey(uModel.Customer, related_name='checkout_customer', on_delete=models.CASCADE)
     user_store = models.ForeignKey(sModel.UserStore, related_name='checkout_user_store', on_delete=models.CASCADE)
     status = models.ForeignKey(mModel.Status, related_name='checkout_status', on_delete=models.CASCADE)
+    rate = models.IntegerField(blank=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(blank=True, auto_now=True)
 
@@ -42,7 +43,6 @@ class Checkout(SafeDeleteModel):
             models.Index(fields=['customer', 'user_store_id'])
         ]
 
-class CheckoutDetail(SafeDeleteModel):
-    pass
-
-
+class CheckoutDetail(models.Model):
+    item = models.ForeignKey(sModel.UserItem, related_name='checkout_detail_item', on_delete=models.CASCADE)
+    qty = models.IntegerField(blank=False)
