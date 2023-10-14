@@ -32,6 +32,15 @@ class Checkout(SafeDeleteModel):
     customer = models.ForeignKey(uModel.Customer, related_name='checkout_customer', on_delete=models.CASCADE)
     user_store = models.ForeignKey(sModel.UserStore, related_name='checkout_user_store', on_delete=models.CASCADE)
     status = models.ForeignKey(mModel.Status, related_name='checkout_status', on_delete=models.CASCADE)
+    payment_method = models.ForeignKey(mModel.PaymentMethod,
+                                       related_name='checkout_payment_method',
+                                       on_delete=models.CASCADE,
+                                        blank=False,)
+    payment_status = models.ForeignKey(mModel.PaymentStatus,
+                                       on_delete=models.CASCADE,
+                                       default=1,
+                                       blank=True,
+                                       null=True) # not using related name to remember django defaul rel_set
     rate = models.IntegerField(blank=True, default=None)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(blank=True, auto_now=True)

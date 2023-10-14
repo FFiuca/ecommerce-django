@@ -163,7 +163,10 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DB_DATABASE'),
         'USER' : env('DB_USERNAME'),
-        'PASSWORD' : env('DB_PASSWORD')
+        'PASSWORD' : env('DB_PASSWORD'),
+        # 'STRICT_TRANS_TABLES': True,
+        # 'STRICT_ALL_TABLES': True,
+        'sql_mode': 'traditional',
     }
 }
 
