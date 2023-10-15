@@ -41,6 +41,7 @@ class CustomerFactory(factory.Factory):
 class OwnerAndUserFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = models.OwnerAndUser
+        django_get_or_create = ('mobile_phone', 'owner_name', 'email')
 
     mobile_phone = factory.Faker('phone_number')
     owner_name = factory.Faker('name')

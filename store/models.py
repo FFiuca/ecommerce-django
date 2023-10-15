@@ -34,6 +34,7 @@ class UserItem(SafeDeleteModel, models.Model):
     # i.category.filter(category_name='cat 2').all()
     category = models.ManyToManyField(masterModel.Category,through='ItemCategory', through_fields=['item', 'category']) # https://docs.djangoproject.com/en/dev/ref/models/fields/#django.db.models.ManyToManyField.through_fields
     customer_cart = models.ManyToManyField(userModel.Customer, through='order.Cart', through_fields=['item', 'customer'])
+    store = models.ManyToManyField(UserStore, through='store.ItemStore', through_fields=['item', 'store'])
 
     class Meta:
         db_tablespace = 'user_item_test_space'
@@ -61,3 +62,9 @@ class UserTag(SafeDeleteModel):
 class ItemCategory(models.Model):
     category = models.ForeignKey(masterModel.Category, on_delete=models.CASCADE, related_name='pivot_item_category')
     item = models.ForeignKey(UserItem, on_delete=models.CASCADE, related_name='pivot_category_item')
+
+class ItemStore(SafeDeleteModel):
+    _safedelete_policy = SOFT_DELETE
+    item = models.ForeignKey(UserItem, on_delete=models.CASCADE, related_name='pivot_item_store')
+    store = models.ForeignKey(UserStore, on_delete=models.CASCADE, related_name='pivot_store_item')
+    created_at = models.DateTimeField(blank=True, null=False, auto_now_add=True)

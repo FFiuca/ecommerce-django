@@ -36,7 +36,7 @@ class AddCheckoutForm(forms.Form):
     class Meta:
         model = models.Checkout
         fields =[
-            'customer',
+            # 'customer',
             'user_store',
             'payment_method'
         ]

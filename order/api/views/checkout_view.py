@@ -31,7 +31,9 @@ class CheckOutView(viewsets.ModelViewSet):
             if valid.is_valid() is False:
                 raise ValidationError('validation error')
 
-            add = checkout_functions.CheckOutFunctions.add(self, data, item)
+            add = checkout_functions.CheckOutFunctions(self, customer=request.user.customer)
+            add = add.add(self, data, item)
+
         except ValidationError as e:
             return Response(data={
                 'status': 400,

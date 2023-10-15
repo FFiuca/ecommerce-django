@@ -13,6 +13,7 @@ class CheckOutFunctions:
 
     @transaction.atomic
     def add(self, data: dict, item: list):
+        data['customer'] = self.customer
         co = mOrder.Checkout.objects.create(**data)
 
         detail = []
