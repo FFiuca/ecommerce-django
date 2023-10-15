@@ -28,10 +28,12 @@ class Cart(SafeDeleteModel):
 class Checkout(SafeDeleteModel):
     _safedelete_policy = SOFT_DELETE
 
-    checkout_code = models.CharField(blank=False, max_length=100, unique=True)
+    checkout_code = models.CharField(blank=True, max_length=100, unique=True, null=False)
     customer = models.ForeignKey(uModel.Customer, related_name='checkout_customer', on_delete=models.CASCADE)
     user_store = models.ForeignKey(sModel.UserStore, related_name='checkout_user_store', on_delete=models.CASCADE)
-    status = models.ForeignKey(mModel.Status, related_name='checkout_status', on_delete=models.CASCADE)
+    status = models.ForeignKey(mModel.Status, related_name='checkout_status',
+                               on_delete=models.CASCADE, blank=True,
+                               default=mModel.Status.objects.filter(module_name='order.checkout', status_int=1).get().pk)
     payment_method = models.ForeignKey(mModel.PaymentMethod,
                                        related_name='checkout_payment_method',
                                        on_delete=models.CASCADE,
@@ -40,9 +42,9 @@ class Checkout(SafeDeleteModel):
                                        on_delete=models.CASCADE,
                                        default=1,
                                        blank=True,
-                                       null=True) # not using related name to remember django defaul rel_set
+                                       null=False) # not using related name to remember django defaul rel_set
     rate = models.IntegerField(blank=True, default=None)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(blank=True, auto_now=True)
 
     class Meta:
@@ -55,3 +57,5 @@ class Checkout(SafeDeleteModel):
 class CheckoutDetail(models.Model):
     item = models.ForeignKey(sModel.UserItem, related_name='checkout_detail_item', on_delete=models.CASCADE)
     qty = models.IntegerField(blank=False)
+
+

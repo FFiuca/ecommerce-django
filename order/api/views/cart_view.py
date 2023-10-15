@@ -24,7 +24,7 @@ class CartView(viewsets.ModelViewSet):
 
         return Response(data=result, status=result['status'])
 
-    # @action(detail=False, methods=['POST'])
+    @action(detail=False, methods=['POST'])
     def add(self, request, *args, **kwargs):
         query = self.get_queryset()
         data = request.data.get('data')
