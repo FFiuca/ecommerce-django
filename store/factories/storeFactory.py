@@ -100,7 +100,7 @@ class BootFactory:
     def runTagFactory(self):
         item = self.runItemFactory(size_category=2, size_item=3)
 
-        tag = TagFactory.create_batch(10, item=item)
+        tag = TagFactory.create_batch(10, item=item) # item param can use when using post_generation, but if use subfactory it auto create, no need again
 
         print(tag)
 
