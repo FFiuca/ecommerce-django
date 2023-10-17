@@ -10,11 +10,14 @@ class ItemsCheckOutValidator(forms.Field):
         # it will be provide min_value prop to compare with qty. See parent class
         # if digging deeper can use @deconstructible to make own validators and support flexibility
         self.min_value = min_value
+        
+        print(self)
 
 
     def validate(self, value) -> None:
         super().validate(value)
 
+        print('cek item valid')
         if not isinstance(value, list):
             raise forms.ValidationError('Item must be a list.')
 
@@ -28,6 +31,8 @@ class ItemsCheckOutValidator(forms.Field):
             validator_helpers.RequiredValidator(val= item.get('item'), field_name='Item')
             min_value_validator = validators.MinValueValidator(self.min_value)
             min_value_validator(item['qty'])
+
+        print('cek item valid done', value)
 
 
 

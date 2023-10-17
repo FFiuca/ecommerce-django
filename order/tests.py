@@ -9,6 +9,7 @@ from store import models as sModel
 from order import models as mOrder
 from master import models as mMaster
 from user.factories import BootFactory as BootFactoryUser
+import json
 
 class CartTest(APITestCase):
     fixtures= ['status', 'usertype']
@@ -54,6 +55,7 @@ class CheckOutTest(APITestCase):
         BootFactoryUser.runCustomerFactory()
         BootFactory.runStoreFactory(3)
         BootFactory.runTagFactory()
+        BootFactory.runItemStoreFactory(1)
 
         self.user = Customer.objects.first().user
 
@@ -62,11 +64,25 @@ class CheckOutTest(APITestCase):
         self.client.login(username=self.user.username, password='1234')
 
     def test_add_checkout(self):
-        item = sModel.UserItem.objects.first()
-
-        # detail
+        item = sModel.ItemStore.objects.first()
 
         data = {
-            'payment_method': mMaster.PaymentMethod.objects.first().pk,
-            # 'user_store':
+            'data': {
+                'payment_method': mMaster.PaymentMethod.objects.first().pk,
+                'user_store': item.store_id,
+            },
+            'item': [
+                {
+                    'item' : item.item_id,
+                    'qty' : 100,
+                }
+            ]
         }
+        data = json.dumps(data)
+
+        req = self.client.post(reverse('order:checkout-add'), data=data, content_type='application/json')
+        req = req.json()
+
+        print(req)
+
+        self.assertEqual(req['status'], 200)

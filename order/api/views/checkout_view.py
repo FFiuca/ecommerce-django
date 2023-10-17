@@ -1,7 +1,9 @@
 from rest_framework import views, viewsets, generics, mixins
 from rest_framework.response import Response
 from rest_framework.decorators import action
+from rest_framework.parsers import JSONParser, FormParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
+from drf_nested_field_multipart import NestedMultipartParser
 from django.forms import ValidationError
 
 from order import models as mOrder
@@ -14,11 +16,14 @@ class CheckOutView(viewsets.ModelViewSet):
     serializer_class = checkout_serializer.CheckOutSerializer
     queryset = mOrder.Checkout.objects.all()
     permission_classes=[IsAuthenticated]
+    parser_classes=[FormParser, MultiPartParser, JSONParser]
 
+    # @action(detail=False, methods=['POST'])
     def add(self, request, *args, **kwargs):
         valid = None
         add = None
         try:
+            print(request.data)
             data = request.data.get('data')
             item = request.data.get('item')
 
@@ -30,9 +35,9 @@ class CheckOutView(viewsets.ModelViewSet):
             valid = checkout_forms.AddCheckoutForm(data=validation_data)
             if valid.is_valid() is False:
                 raise ValidationError('validation error')
-
-            add = checkout_functions.CheckOutFunctions(self, customer=request.user.customer)
-            add = add.add(self, data, item)
+            print(request.user.customer)
+            add = checkout_functions.CheckOutFunctions(self, request.user.customer)
+            add = add.add(data, item)
 
         except ValidationError as e:
             return Response(data={

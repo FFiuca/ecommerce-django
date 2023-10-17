@@ -8,8 +8,8 @@ from order import models as mOrder
 import datetime
 
 class CheckOutFunctions:
-    def __init__(self, customer: mUser.Customer):
-        self.customer = customer
+    def __init__(self, customer2: object, *args, **kwargs):
+        self.customer = customer2
 
     @transaction.atomic
     def add(self, data: dict, item: list):
