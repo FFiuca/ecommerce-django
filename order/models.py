@@ -43,7 +43,7 @@ class Checkout(SafeDeleteModel):
                                        default=1,
                                        blank=True,
                                        null=False) # not using related name to remember django defaul rel_set
-    rate = models.IntegerField(blank=True, default=None)
+    rate = models.IntegerField(blank=True, default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(blank=True, auto_now=True)
 
