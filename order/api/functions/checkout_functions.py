@@ -14,16 +14,18 @@ class CheckOutFunctions:
 
     @transaction.atomic
     def add(self, data: dict, item: list):
+
         data['customer'] = self.customer
         data['user_store']= mStore.UserStore.objects.get(pk=data['user_store'])
         data['payment_method'] = mMaster.PaymentMethod.objects.get(pk=data['payment_method'])
-        
+
         co = mOrder.Checkout.objects.create(**data)
+
         print('sini', co)
         detail = []
         for idx, r in enumerate(item):
             print('ttt',r)
-            detail.append(mOrder.CheckoutDetail(qty=r['qty'], item=mStore.UserItem.objects.get(pk=r['item'])))
+            detail.append(mOrder.CheckoutDetail(checkout=co, qty=r['qty'], item=mStore.UserItem.objects.get(pk=r['item'])))
 
         detail = mOrder.CheckoutDetail.objects.bulk_create(detail)
         print(detail, co)

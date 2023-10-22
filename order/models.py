@@ -55,6 +55,7 @@ class Checkout(SafeDeleteModel):
         ]
 
 class CheckoutDetail(models.Model):
+    checkout = models.ForeignKey(Checkout, related_name='detail_checkout', on_delete=models.CASCADE)
     item = models.ForeignKey(sModel.UserItem, related_name='checkout_detail_item', on_delete=models.CASCADE)
     qty = models.IntegerField(blank=False)
 

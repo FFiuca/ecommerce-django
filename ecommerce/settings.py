@@ -14,6 +14,7 @@ from pathlib import Path
 import environ
 from datetime import timedelta
 import os
+from django.conf import settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -65,6 +66,8 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt.token_blacklist',
     "django_seed",
     "safedelete",
+    "django_q",
+    "clearcache",
 ]
 
 MIDDLEWARE = [
@@ -150,6 +153,9 @@ SIMPLE_JWT = {
 
 WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
+# TEST = {
+#     'NAME': 'test_ecommerce_django2'
+# }
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -164,10 +170,19 @@ DATABASES = {
         'NAME': env('DB_DATABASE'),
         'USER' : env('DB_USERNAME'),
         'PASSWORD' : env('DB_PASSWORD'),
-        # 'STRICT_TRANS_TABLES': True,
-        # 'STRICT_ALL_TABLES': True,
+        'STRICT_TRANS_TABLES': True,
+        'STRICT_ALL_TABLES': True,
         'sql_mode': 'traditional',
-    }
+    },
+    # 'test' : {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'NAME': TEST['NAME'],
+    #     'USER' : env('DB_USERNAME'),
+    #     'PASSWORD' : env('DB_PASSWORD'),
+    #     # 'STRICT_TRANS_TABLES': True,
+    #     # 'STRICT_ALL_TABLES': True,
+    #     'sql_mode': 'traditional',
+    # }
 }
 
 CACHES = {
@@ -227,3 +242,46 @@ INTERNAL_IPS = [
     "127.0.0.1",
     # ...
 ]
+
+Q_CLUSTER = {
+    'name': 'ecommerce_project',
+    'workers': 8,
+    'recycle': 500,
+    'timeout': 60,
+    'compress': True,
+    'save_limit': 250,
+    'queue_limit': 500,
+    'cpu_affinity': 1,
+    'label': 'Django Q',
+    'cached': 0,
+
+    # 2 drivers can use in same time
+    # for now just redis work with auto test
+    'redis': {
+        'host': '127.0.0.1',
+        'port': 6379,
+        'db': 0,
+    },
+
+    # 'daemonize_workers': False,
+    # 'orm': 'default',
+    # 'orm': 'default' if settings.TEST else 'test',
+    # 'mongo': {
+    #         'host': '127.0.0.1',
+    #         'port': 27017
+    # },
+    # 'mongo_db': 'django_q'
+}
+
+# print('Q_CLUSTER', Q_CLUSTER['orm'])
+
+# EMAIL
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST=env('EMAIL_HOST')
+EMAIL_PORT=env('EMAIL_PORT')
+EMAIL_HOST_USER=env('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS=env('EMAIL_USE_TLS')
+EMAIL_FROM_ADDRESS=env('EMAIL_FROM_ADDRESS')
+EMAIL_FROM_NAME=env('EMAIL_FROM_NAME')
+
