@@ -30,6 +30,8 @@ environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
+APP_NAME= 'django-ecommerce'
+
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-yor%sow7jfz3fq$=hqs!6fw$vka_y(jd=w=a=3fu8hu746673g'
 
@@ -186,12 +188,25 @@ DATABASES = {
 }
 
 CACHES = {
-    "default": {
-        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+    # "default": {
+    #     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
 
-        # "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
-        # "LOCATION": "/var/tmp/django_cache",
-    }
+    #     # "BACKEND": "django.core.cache.backends.filebased.FileBasedCache",
+    #     # "LOCATION": "/var/tmp/django_cache",
+    # },
+    "default" : {
+        "BACKEND": "django.core.cache.backends.redis.RedisCache",
+        "LOCATION": [
+            "redis://127.0.0.1:6379",  # leader
+            # "redis://127.0.0.1:6378",  # read-replica 1
+            # "redis://127.0.0.1:6377",  # read-replica 2
+        ],
+        # "OPTIONS": {
+        #     "CLIENT_CLASS": "django_redis.client.DefaultClient"
+        # },
+        "KEY_PREFIX": "dj_",
+        "TIMEOUT": 60* 15,
+    }, 
 }
 
 
