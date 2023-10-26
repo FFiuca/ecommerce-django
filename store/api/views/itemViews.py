@@ -6,12 +6,14 @@ from django.views.decorators.csrf import csrf_exempt, csrf_protect
 from store.models import UserItem
 from django.db.models import Q
 from store.api.serializers import ItemSerializers # . present for current level folder
+from django.views.decorators.cache import cache_page
 
 class ItemView(viewsets.ModelViewSet):
     queryset = UserItem.objects.all()
     serializer_class = ItemSerializers.ItemSerializer
 
     @action(detail=False, methods=['POST', 'GET'])
+    @cache_page(timeout=60* 1)
     def list(self, request, *args, **kwargs):
         cond = Q()
         req = request.data
