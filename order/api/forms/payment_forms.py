@@ -8,12 +8,11 @@ def check_valid_co_code(val):
     return True
 
 class UpdatePaymentStatusForm(forms.Form):
-    payment_status = forms.IntegerField(required=True)
-    checkout_code = forms.ModelChoiceField(
+    payment_status = forms.ModelChoiceField(required=True, queryset=mMaster.PaymentStatus.objects.all(),
+                                            empty_label=None)
+    checkout_code = forms.CharField(
         required=True,
-        choices=mMaster.PaymentStatus.objects.all(),
         validators=[
             check_valid_co_code
         ],
-        empty_label=None
         )

@@ -50,6 +50,9 @@ class OwnerAndUserFactory(factory.django.DjangoModelFactory):
     usertype = UserType.objects.get(pk=2)
     user = factory.SubFactory(UserFactory2)
 
+
+# class AdminFactory(fac)
+
 class BootFactory:
 
     @classmethod
@@ -59,5 +62,14 @@ class BootFactory:
             a.user.save()
             a.save()
 
+    @classmethod
+    def makeAdminFactory(self, size: int=1, is_superuser: int=None):
+        data = {
+            'is_staff': 1
+        }
 
+        if is_superuser is not None and is_superuser in (1,0):
+            data['is_superuser'] = is_superuser
 
+        for i in range(0, size):
+            a = UserFactory(**data).save()

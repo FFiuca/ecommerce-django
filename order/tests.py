@@ -51,6 +51,11 @@ class CartTest(APITestCase):
 class CheckOutTest(APITestCase):
     fixtures = ['status', 'usertype', 'payment_status', 'payment_method']
 
+    def __init__(self, methodName: str = "runTest") -> None:
+        super().__init__(methodName)
+
+        self.setUp()
+
     def setUp(self) -> None:
         BootFactoryUser.runCustomerFactory()
         BootFactory.runStoreFactory(3)
@@ -63,6 +68,7 @@ class CheckOutTest(APITestCase):
 
         self.client.login(username=self.user.username, password='1234')
 
+    # @classmethod
     def test_add_checkout(self):
         item = sModel.ItemStore.objects.first()
 
@@ -83,6 +89,51 @@ class CheckOutTest(APITestCase):
         req = self.client.post(reverse('order:checkout-add'), data=data, content_type='application/json')
         req = req.json()
 
+        print(req)
+
+        self.assertEqual(req['status'], 200)
+        
+        return req
+
+
+class PaymentTest(APITestCase):
+    fixtures = ['status', 'usertype', 'payment_status', 'payment_method']
+
+    def setUp(self) -> None:
+        super().setUp()
+
+        BootFactoryUser.runCustomerFactory()
+        BootFactory.runStoreFactory(3)
+        BootFactory.runTagFactory()
+        BootFactory.runItemStoreFactory(1)
+        BootFactoryUser.makeAdminFactory()
+
+        self.customer = Customer.objects.first()
+        self.admin = User.objects.filter(is_staff=1).first()
+
+        self.client = APIClient()
+        self.client.login(username=self.admin.username, password='1234')
+
+        self.checkout_test = CheckOutTest()
+
+    def test_change_paymnent_status(self):
+
+        # it's better not call other test in current test, can use functions class directly
+        co = self.checkout_test.test_add_checkout()
+
+        # print(type(co))
+        # assert if co is success
+        self.assertEqual(co['status'], 200)
+
+        co = co['data']['co']
+        print('cp2', co)
+        data = {
+            'checkout_code': co['checkout_code'],
+            'payment_status': 3,
+        }
+
+        req = self.client.post(reverse('order:payment.change_payment_status'), data=data)
+        req = req.json()
         print(req)
 
         self.assertEqual(req['status'], 200)
