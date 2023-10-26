@@ -1,3 +1,5 @@
+from django.db import transaction
+
 from master import models as mMaster
 from order import models as mOrder
 
@@ -11,6 +13,7 @@ class PaymentFunctions():
         elif status==3:
             return self.change_payment_to_return(checkout_code, status)
 
+    @transaction.atomic
     def change_payment_to_settlement(self, checkout_code: str, status: int):
         payment_status = mMaster.PaymentStatus.objects.get(pk=status)
         status = mMaster.Status.objects.filter(status_name='packed', module_name='order.checkout').get()
@@ -24,6 +27,7 @@ class PaymentFunctions():
             'update': update
         }
 
+    @transaction.atomic
     def change_payment_to_return(self, checkout_code: str, status: int):
         payment_status = mMaster.PaymentStatus.objects.get(pk=status)
         status = mMaster.Status.objects.filter(status_name='retur', module_name='order.checkout').get()
