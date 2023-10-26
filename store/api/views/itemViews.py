@@ -7,16 +7,24 @@ from store.models import UserItem
 from django.db.models import Q
 from store.api.serializers import ItemSerializers # . present for current level folder
 from django.views.decorators.cache import cache_page
+from django.utils.decorators import method_decorator
+from django.views.decorators.vary import vary_on_cookie, vary_on_headers
 
 class ItemView(viewsets.ModelViewSet):
     queryset = UserItem.objects.all()
     serializer_class = ItemSerializers.ItemSerializer
 
     @action(detail=False, methods=['POST', 'GET'])
-    @cache_page(timeout=60* 1)
+    # cache_page only caching get or head method and response status is 200
+    @method_decorator(cache_page(timeout=60* 1, 
+                                #  cache='default', 
+                                #  key_prefix='tesst' # can be callback also to make dynamic url. https://chat.openai.com/c/d23163fb-e2f7-4b87-9fad-43eedf6f4df1
+                                 ))
+    @method_decorator(vary_on_cookie)
     def list(self, request, *args, **kwargs):
         cond = Q()
         req = request.data
+        print(req, req.get('item_name'))
         if req.get('item_name') is not None :
             cond= cond & Q(item_name__contains=req['item_name'])
 
@@ -37,6 +45,7 @@ class ItemView(viewsets.ModelViewSet):
         return Response(data=data, status=data['status'])
 
 @csrf_exempt
+@cache_page(timeout=60* 1)
 @api_view(['GET', 'POST'])
 def search(request):
         print('cokkkk')
