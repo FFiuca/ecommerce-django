@@ -10,7 +10,8 @@ urlpatterns = [
         }), name='cart-list'),
         path('/add', cart_view.CartView.as_view({
             'post': 'add'
-        }), name='cart-add')
+        }), name='cart-add'),
+        path('/async_list', cart_view.AsyncCartView.as_view(), name='item.async_list')
     ])),
     path('/checkout', include([
         path('/add', checkout_view.CheckOutView.as_view({

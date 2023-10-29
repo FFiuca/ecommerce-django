@@ -14,7 +14,7 @@ urlpatterns = [
             'post': 'list',
             'get': 'list'
             }), name='item.list'),
-        path('/search2', itemViews.search, name='item.list')
+        path('/search2', itemViews.search, name='item.list'),
     ]), name='item')
 ]
 
