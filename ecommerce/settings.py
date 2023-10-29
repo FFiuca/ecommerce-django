@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "safedelete",
     "django_q",
     "clearcache",
+    "silk",
 ]
 
 MIDDLEWARE = [
@@ -83,6 +84,7 @@ MIDDLEWARE = [
 
     # third
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "silk.middleware.SilkyMiddleware",
 ]
 
 ROOT_URLCONF = 'ecommerce.urls'
@@ -206,7 +208,7 @@ CACHES = {
         # },
         "KEY_PREFIX": "dj",
         "TIMEOUT": 60* 15,
-    }, 
+    },
 }
 
 
