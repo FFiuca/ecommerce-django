@@ -1,7 +1,9 @@
+
 ## Initialization
 My Environtment :
  * Windows 11
  * Python 3.11.2 
+
 How to run :
 1. `cp env-example .env`
 2. `pip install virtualenv`
